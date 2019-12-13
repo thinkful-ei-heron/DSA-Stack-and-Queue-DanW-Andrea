@@ -1,3 +1,4 @@
+/* eslint-disable strict */
 // Creates a node containing the data and a reference to the next item
 class _Node {
   constructor(value) {
@@ -71,5 +72,72 @@ function display(q) {
     currNode = currNode.next;
   }
 }
+
+let mQueue = new Queue;
+let fQueue = new Queue;
+
+
+const dancer = (gender, name) => {
+
+  if (gender === 'M') {
+    mQueue.enqueue(name);
+  }
+  else if (gender === 'F') {
+    fQueue.enqueue(name);
+  }
+  if (!isEmpty(mQueue) && !isEmpty(fQueue)) {
+    console.log(`${mQueue.dequeue()} and ${fQueue.dequeue()}`);
+  }
+};
+
+// dancer('F', 'Jane');
+// dancer('M', 'Frank');
+// dancer('M', 'John');
+// dancer('M', 'Sherlock');
+// dancer('F', 'Madonna');
+// dancer('M', 'David');
+// dancer('M', 'Christopher');
+// dancer('F', 'Beyonce');
+
+
+let OBL = new Queue();
+
+const bankLine = (OBL) => {
+  if (isEmpty(OBL)) {
+    console.log('Line is empty');
+    return;
+  }
+  const randomNum = Math.random();
+  let person = OBL.dequeue();
+  console.log(randomNum);
+  if (randomNum <= .25) {
+    OBL.enqueue(person);
+  }
+  display(OBL);
+  console.log('separate');
+
+};
+
+// setTimeout(() => bankLine(OBL), 3000);
+OBL.enqueue('Kirk');
+OBL.enqueue('Spock');
+OBL.enqueue('Uhura');
+OBL.enqueue('Sulu');
+OBL.enqueue('Checkov');
+OBL.enqueue('Andrea');
+OBL.enqueue('Dan');
+OBL.enqueue('Tauhida');
+OBL.enqueue('Mike');
+OBL.enqueue('Chris');
+
+while (!isEmpty(OBL)) {
+  bankLine(OBL);
+}
+display(OBL);
+
+
+
+
+
 
 main();
