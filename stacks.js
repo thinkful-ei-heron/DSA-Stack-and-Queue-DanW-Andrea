@@ -49,6 +49,7 @@ class Stack {
            the pointer to the next item and that next item becomes the
            top of the stack */
     const node = this.top;
+    if (!node) return undefined;
     this.top = node.next;
     return node.data;
   }
@@ -111,27 +112,37 @@ function matchingParantheses(str) {
 
 function ascendingSort(stack) {
   let sortedStack = new Stack();
-  let helperStack = new Stack();
-  while (!isEmpty(stack)) {
-    if (isEmpty(sortedStack)) sortedStack.push(stack.pop());
-    if (peek(sortedStack) >= peek(stack)) sortedStack.push(stack.pop());
+  // let temp = null;
+  // sortedStack.push(stack.pop);
+  // while (!isEmpty(sortedStack)) {
+  //   if (peek(sortedStack) >= peek(stack)) sortedStack.push(stack.pop());
+  //   else {
+  //     temp = stack.pop;
+  //     while (temp > peek(sortedStack) && !isEmpty(sortedStack)) {
+  //       stack.push(sortedStack.pop());
+  //     }
+  //     sortedStack.push(temp);
+  //   }
+  // }
+  let temp = stack.pop();
+  while (temp) {
+    if (peek(sortedStack) <= temp || isEmpty(sortedStack)) {
+      sortedStack.push(temp);
+      temp = stack.pop();
+    }
     else {
-      while (peek(sortedStack) < peek(stack)) {
-        helperStack.push(sortedStack.pop());
-      }
-      sortedStack.push(stack.pop());
-      while (!isEmpty(helperStack)) {
-        sortedStack.push(helperStack.pop());
-      }
+      stack.push(sortedStack.pop());
     }
   }
-
-  return sortedStack;
+  while (!isEmpty(sortedStack)) {
+    stack.push(sortedStack.pop());
+  }
+  return stack;
 }
 
-console.log(matchingParantheses('(())'));
-console.log(matchingParantheses('(()'));
-console.log(matchingParantheses('(()))'));
+// console.log(matchingParantheses('(())'));
+// console.log(matchingParantheses('(()'));
+// console.log(matchingParantheses('(()))'));
 let toSort = new Stack();
 toSort.push(2);
 toSort.push(1);
