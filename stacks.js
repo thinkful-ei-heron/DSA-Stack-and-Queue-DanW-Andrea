@@ -19,6 +19,7 @@ function isEmpty(stack) {
 function display(stack) {
   let currNode = stack.top;
 
+  console.log('____Stack____');
   while (currNode !== null) {
     console.log(currNode.data);
     currNode = currNode.next;
@@ -50,6 +51,7 @@ class Stack {
            top of the stack */
     const node = this.top;
     this.top = node.next;
+    if (!node) return undefined;
     return node.data;
   }
 }
@@ -110,33 +112,31 @@ function matchingParantheses(str) {
 }
 
 function ascendingSort(stack) {
-  let sortedStack = new Stack();
-  let helperStack = new Stack();
-  while (!isEmpty(stack)) {
-    if (isEmpty(sortedStack)) sortedStack.push(stack.pop());
-    if (peek(sortedStack) >= peek(stack)) sortedStack.push(stack.pop());
-    else {
-      while (peek(sortedStack) < peek(stack)) {
-        helperStack.push(sortedStack.pop());
-      }
-      sortedStack.push(stack.pop());
-      while (!isEmpty(helperStack)) {
-        sortedStack.push(helperStack.pop());
-      }
-    }
-  }
-
-  return sortedStack;
+  //   let sortedStack = new Stack();
+  //   while (!isEmpty(stack)) {
+  //     if (isEmpty(sortedStack)) sortedStack.push(stack.pop());
+  //     if (peek(sortedStack) >= peek(stack)) sortedStack.push(stack.pop());
+  //     else {
+  //       while (peek(sortedStack) < peek(stack)) {
+  //         helperStack.push(sortedStack.pop());
+  //       }
+  //       sortedStack.push(stack.pop());
+  //       while (!isEmpty(helperStack)) {
+  //         sortedStack.push(helperStack.pop());
+  //       }
+  //     }
+  //   }
 }
 
 console.log(matchingParantheses('(())'));
 console.log(matchingParantheses('(()'));
 console.log(matchingParantheses('(()))'));
 let toSort = new Stack();
-toSort.push(2);
-toSort.push(1);
-toSort.push(4);
-toSort.push(3);
 toSort.push(5);
+toSort.push(2);
+toSort.push(6);
+toSort.push(3);
 display(ascendingSort(toSort));
 display(ascendingSort(starTrek));
+
+modules.export = Stack;
