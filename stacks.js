@@ -19,6 +19,7 @@ function isEmpty(stack) {
 function display(stack) {
   let currNode = stack.top;
 
+  console.log('____Stack____');
   while (currNode !== null) {
     console.log(currNode.data);
     currNode = currNode.next;
@@ -51,6 +52,7 @@ class Stack {
     const node = this.top;
     if (!node) return undefined;
     this.top = node.next;
+    if (!node) return undefined;
     return node.data;
   }
 }
@@ -144,10 +146,11 @@ function ascendingSort(stack) {
 // console.log(matchingParantheses('(()'));
 // console.log(matchingParantheses('(()))'));
 let toSort = new Stack();
-toSort.push(2);
-toSort.push(1);
-toSort.push(4);
-toSort.push(3);
 toSort.push(5);
+toSort.push(2);
+toSort.push(6);
+toSort.push(3);
 display(ascendingSort(toSort));
 display(ascendingSort(starTrek));
+
+modules.export = Stack;
