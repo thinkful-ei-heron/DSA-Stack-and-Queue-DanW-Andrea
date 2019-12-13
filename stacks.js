@@ -1,57 +1,57 @@
 /* eslint-disable indent */
 /* eslint-disable strict */
 class _Node {
-    constructor(data, next) {
-        this.data = data;
-        this.next = next;
-    }
+  constructor(data, next) {
+    this.data = data;
+    this.next = next;
+  }
 }
 
 function peek(stack) {
-    if (stack.top === null) return null;
-    return stack.top.data;
+  if (stack.top === null) return null;
+  return stack.top.data;
 }
 
 function isEmpty(stack) {
-    return !stack.top;
+  return !stack.top;
 }
 
 function display(stack) {
-    let currNode = stack.top;
+  let currNode = stack.top;
 
-    while (currNode !== null) {
-        console.log(currNode.data);
-        currNode = currNode.next;
-    }
+  while (currNode !== null) {
+    console.log(currNode.data);
+    currNode = currNode.next;
+  }
 }
 
 class Stack {
-    constructor() {
-        this.top = null;
-    }
-    push(data) {
-        /* If the stack is empty, then the node will be the
+  constructor() {
+    this.top = null;
+  }
+  push(data) {
+    /* If the stack is empty, then the node will be the
            top of the stack */
-        if (this.top === null) {
-            this.top = new _Node(data, null);
-            return this.top;
-        }
+    if (this.top === null) {
+      this.top = new _Node(data, null);
+      return this.top;
+    }
 
-        /* If the stack already has something, 
+    /* If the stack already has something, 
            then create a new node,
            add data to the new node, and
            have the pointer point to the top */
-        const node = new _Node(data, this.top);
-        this.top = node;
-    }
-    pop() {
-        /* In order to remove the top of the stack, you have to point
+    const node = new _Node(data, this.top);
+    this.top = node;
+  }
+  pop() {
+    /* In order to remove the top of the stack, you have to point
            the pointer to the next item and that next item becomes the
            top of the stack */
-        const node = this.top;
-        this.top = node.next;
-        return node.data;
-    }
+    const node = this.top;
+    this.top = node.next;
+    return node.data;
+  }
 }
 
 let starTrek = new Stack();
@@ -67,24 +67,24 @@ console.log(isEmpty(starTrek));
 //first item added would be Kirk
 //first from top would be Scotty
 
-starTrek.pop();
-starTrek.pop();
+//starTrek.pop();
+//starTrek.pop();
 
 display(starTrek);
 //to remove McCoy we would need to pop() twice because it removes from the top of the stack
 
 function is_palindrome(s) {
-    let newStack = new Stack();
-    let newString = '';
-    s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+  let newStack = new Stack();
+  let newString = '';
+  s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
 
-    for (let i = 0; i < s.length; i++) {
-        newStack.push(s[i]);
-    }
-    while (!isEmpty(newStack)) {
-        newString += newStack.pop();
-    }
-    return newString === s;
+  for (let i = 0; i < s.length; i++) {
+    newStack.push(s[i]);
+  }
+  while (!isEmpty(newStack)) {
+    newString += newStack.pop();
+  }
+  return newString === s;
 }
 
 // True, true, true, false
@@ -94,18 +94,49 @@ function is_palindrome(s) {
 // console.log(is_palindrome('Tauhida'));
 
 function matchingParantheses(str) {
-    let newStack = new Stack();
-    for (let i = 0; i < str.length; i++) {
-        if (str[i] === '(') {
-            newStack.push(str[i]);
-        }
-        else if (str[i] === ')') {
-            newStack.pop();
-        }
+  let newStack = new Stack();
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(') {
+      newStack.push(str[i]);
+    } else if (str[i] === ')') {
+      if (isEmpty(newStack)) {
+        console.log('unmatched closing parethesis at character ' + i);
+        return false;
+      }
+      newStack.pop();
     }
-    return isEmpty(newStack);
+  }
+  return isEmpty(newStack);
+}
 
+function ascendingSort(stack) {
+  let sortedStack = new Stack();
+  let helperStack = new Stack();
+  while (!isEmpty(stack)) {
+    if (isEmpty(sortedStack)) sortedStack.push(stack.pop());
+    if (peek(sortedStack) >= peek(stack)) sortedStack.push(stack.pop());
+    else {
+      while (peek(sortedStack) < peek(stack)) {
+        helperStack.push(sortedStack.pop());
+      }
+      sortedStack.push(stack.pop());
+      while (!isEmpty(helperStack)) {
+        sortedStack.push(helperStack.pop());
+      }
+    }
+  }
+
+  return sortedStack;
 }
 
 console.log(matchingParantheses('(())'));
 console.log(matchingParantheses('(()'));
+console.log(matchingParantheses('(()))'));
+let toSort = new Stack();
+toSort.push(2);
+toSort.push(1);
+toSort.push(4);
+toSort.push(3);
+toSort.push(5);
+display(ascendingSort(toSort));
+display(ascendingSort(starTrek));
